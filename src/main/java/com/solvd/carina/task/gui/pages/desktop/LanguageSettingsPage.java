@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class ChangeLanguagePage extends AbstractPage {
+public class LanguageSettingsPage extends AbstractPage {
     @FindBy(xpath = "//div[@id='icp-language-settings']/div[not(@id)]")
     private List<ExtendedWebElement> languageList;
 
     @FindBy(xpath = "//span[@id='icp-save-button']//input[@type='submit']")
     private ExtendedWebElement saveChangesButton;
 
-    public ChangeLanguagePage(WebDriver driver) {
+    public LanguageSettingsPage(WebDriver driver) {
         super(driver);
     }
 

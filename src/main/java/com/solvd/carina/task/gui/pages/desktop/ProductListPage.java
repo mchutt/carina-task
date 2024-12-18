@@ -9,10 +9,9 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SearchPage extends AbstractPage {
+public class ProductListPage extends AbstractPage {
 
-    private final String productXpath = "//div[@data-component-type='s-search-result']";
-    @FindBy(xpath = productXpath)
+    @FindBy(xpath = "//div[@data-component-type='s-search-result']")
     private List<ProductCardComponent> productList;
 
     @FindBy(xpath = "//span[@id='a-autoid-0-announce']//span[@class='a-dropdown-prompt']")
@@ -22,7 +21,7 @@ public class SearchPage extends AbstractPage {
     private ExtendedWebElement sortByPriceAsc;
 
 
-    public SearchPage(WebDriver driver) {
+    public ProductListPage(WebDriver driver) {
         super(driver);
     }
 

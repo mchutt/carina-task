@@ -1,7 +1,7 @@
 package com.solvd.carina.task.gui.components;
 
 import com.solvd.carina.task.gui.pages.desktop.CartPage;
-import com.solvd.carina.task.gui.pages.desktop.ChangeLanguagePage;
+import com.solvd.carina.task.gui.pages.desktop.LanguageSettingsPage;
 import com.solvd.carina.task.gui.pages.desktop.LoginPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
@@ -33,9 +33,9 @@ public class HeaderComponent extends AbstractUIObject {
         super(driver, searchContext);
     }
 
-    public ChangeLanguagePage clickOnChangeLanguageButton(){
+    public LanguageSettingsPage clickOnChangeLanguageButton(){
         changeLanguageButton.click();
-        return new ChangeLanguagePage(getDriver());
+        return new LanguageSettingsPage(getDriver());
     }
     public CartPage clickOnCartButton(){
         cartButton.click();

@@ -8,39 +8,41 @@ import org.testng.annotations.Test;
 
 public class AmazonWebsiteTest extends AbstractTest {
     @Test
-    public void validateSearchingForAProduct(){
+    public void validateSearchingForAProduct() {
         AmazonHomePage page = new AmazonHomePage(getDriver());
         page.openURL("https://www.amazon.com/");
 
 //        pause(10000L);// to avoid captcha
         page.typeOnSearchInput("iPhone");
-        SearchPage searchPage = page.pressEnter();
+        ProductListPage productListPage = page.pressEnter();
 
-        Assert.assertFalse(searchPage.isProductListEmpty(), "Product list is empty");
+        Assert.assertFalse(productListPage.isProductListEmpty(), "Product list is empty");
     }
+
     @Test
-    public void validateChangingWebsiteLanguage(){
+    public void validateChangingWebsiteLanguage() {
         AmazonHomePage page = new AmazonHomePage(getDriver());
         page.open();
 
         //pause(10000L);// to avoid captcha
-        ChangeLanguagePage changeLanguagePage = page.getHeaderComponent().clickOnChangeLanguageButton();
-        changeLanguagePage.selectLanguage("es_US");
-        changeLanguagePage.clickOnSaveChanges();
+        LanguageSettingsPage languageSettingsPage = page.getHeaderComponent().clickOnChangeLanguageButton();
+        languageSettingsPage.selectLanguage("es_US");
+        languageSettingsPage.clickOnSaveChanges();
 
         String expectedSentence = "Elige un idioma para hacer compras. La selección actual es Español. ";
         boolean isPresent = page.getHeaderComponent().isSentencePresent(expectedSentence);
 
         Assert.assertTrue(isPresent, "The language of the website is not as expected. Expected sentence is not present. ");
     }
+
     @Test
-    public void validateAddingAProductToTheCart(){
+    public void validateAddingAProductToTheCart() {
         AmazonHomePage page = new AmazonHomePage(getDriver());
         page.open();
 
         page.typeOnSearchInput("iphone 14 pro max");
-        SearchPage searchPage = page.pressEnter();
-        ProductCardComponent product = searchPage.getAProduct(0);
+        ProductListPage productListPage = page.pressEnter();
+        ProductCardComponent product = productListPage.getAProduct(0);
         product.clickOnAddToCartButton();
 
         CartPage cartPage = page.getHeaderComponent().clickOnCartButton();
@@ -49,7 +51,7 @@ public class AmazonWebsiteTest extends AbstractTest {
     }
 
     @Test
-    public void validateThatANonRegisteredUserIsInvalid(){
+    public void validateThatANonRegisteredUserIsInvalid() {
         AmazonHomePage page = new AmazonHomePage(getDriver());
         page.open();
 
@@ -68,11 +70,11 @@ public class AmazonWebsiteTest extends AbstractTest {
 
         //pause(10000L); // to avoid captcha
         page.typeOnSearchInput("iPhone");
-        SearchPage searchPage = page.pressEnter();
-        searchPage.clickOnSortingButton();
-        searchPage.clickOnSortByPriceAsc();
+        ProductListPage productListPage = page.pressEnter();
+        productListPage.clickOnSortingButton();
+        productListPage.clickOnSortByPriceAsc();
 
-        Assert.assertTrue(searchPage.isProductListSortedByPrice(), "Products are no sorted by price");
+        Assert.assertTrue(productListPage.isProductListSortedByPrice(), "Products are no sorted by price");
     }
 
 }
