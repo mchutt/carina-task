@@ -21,17 +21,20 @@ public class SignUpFormComponent extends AbstractUIObject {
     @FindBy(xpath = "//p[text()='Email Address already exist!']")
     private ExtendedWebElement emailAddressAlreadyExistErrorMessage;
 
+    @FindBy(xpath = "//h2[text()='New User Signup!']")
+    private ExtendedWebElement newUserSignupMessage;
+
     public SignUpFormComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
 
-    public void signUp(String name, String email){
+    public void signUp(String name, String email) {
         typeInNameInput(name);
         typeInEmailInput(email);
         clickOnSignUpButton();
     }
 
-    public FullSignUpPage openFullSignUpPage(){
+    public FullSignUpPage openFullSignUpPage() {
         return new FullSignUpPage(driver);
     }
 
@@ -49,5 +52,9 @@ public class SignUpFormComponent extends AbstractUIObject {
 
     public boolean isErrorMessageVisible() {
         return emailAddressAlreadyExistErrorMessage.isVisible();
+    }
+
+    public boolean isNewUserSignupMessageVisible() {
+        return newUserSignupMessage.isVisible();
     }
 }

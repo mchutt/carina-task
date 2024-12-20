@@ -5,6 +5,7 @@ import com.solvd.carina.automationwebpage.components.ProductCardComponent;
 import com.solvd.carina.automationwebpage.components.ProductInCartComponent;
 import com.solvd.carina.automationwebpage.components.SignUpFormComponent;
 import com.solvd.carina.automationwebpage.pages.*;
+import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
@@ -14,13 +15,11 @@ import java.util.List;
 
 import static com.solvd.carina.automationwebpage.constants.UserConstants.*;
 
-public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
-
-
-
+public class AutomationTest extends AbstractTest {
 
 
     @Test
+    @MethodOwner(owner = "mchutt")
     public void searchAProductTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -50,6 +49,7 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "mchutt")
     public void registerUserWithAnExistingEmailTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -57,13 +57,16 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
 
 
         SignUpFormComponent form = homePage.getHeader().openLoginPage().getSignUpForm();
+        boolean newUserSignupMessageVisible = form.isNewUserSignupMessageVisible();
+        Assert.assertTrue(newUserSignupMessageVisible, "The 'New user signup' message is not Visible! ");
         form.signUp("Pepe", "pepe@pepe.com");
 
         boolean isErrorMessageVisible = form.isErrorMessageVisible();
-        Assert.assertTrue(isErrorMessageVisible, "The error message for an existing email is not displayed. ");
+        Assert.assertTrue(isErrorMessageVisible, "The error 'Email Address already exist!' message is not visible. ");
     }
 
     @Test
+    @MethodOwner(owner = "mchutt")
     public void loginWithAnIncorrectEmailAndPasswordTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -71,6 +74,8 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
 
 
         LoginFormComponent loginForm = homePage.getHeader().openLoginPage().getLoginForm();
+        boolean loginToYourAccountMessageVisible = loginForm.isLoginToYourAccountMessageVisible();
+        Assert.assertTrue(loginToYourAccountMessageVisible, "The 'Login to your account' message is not visible! ");
         loginForm.login("pepe@pepe.com", "Incorrect Pass");
 
         boolean isErrorMessageVisible = loginForm.isErrorMessageVisible();
@@ -78,6 +83,7 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "mchutt")
     public void addProductToTheCartTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -99,6 +105,7 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "mchutt")
     public void checkoutTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -137,7 +144,7 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
 
     @Test
     @MethodOwner(owner = "mchutt")
-    public void createAccountAndRemoveAccountTest(){
+    public void createAccountAndRemoveAccountTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
@@ -155,8 +162,8 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
         fullSignUpPage.typeCity(NEW_USER_CITY);
         fullSignUpPage.typeZipCode(NEW_USER_ZIP_CODE);
         fullSignUpPage.typeMobilePhone(NEW_USER_MOBILE_NUMBER);
-
         AccountCreatedPage accountCreatedPage = fullSignUpPage.clickOnSubmitButton();
+
         Assert.assertTrue(accountCreatedPage.isAccountCreatedMessageVisible(), "The message 'Account Created!' is not visible!");
         accountCreatedPage.clickOnContinueButton();
 

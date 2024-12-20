@@ -20,6 +20,9 @@ public class LoginFormComponent extends AbstractUIObject {
     @FindBy(xpath = ".//p[text()='Your email or password is incorrect!']")
     private ExtendedWebElement emailOrPasswordIncorrectMessage;
 
+    @FindBy(xpath = "//h2[text()='Login to your account']")
+    private ExtendedWebElement loginToYourAccountMessage;
+
     public LoginFormComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
@@ -36,7 +39,7 @@ public class LoginFormComponent extends AbstractUIObject {
         loginButton.click();
     }
 
-    public void login(String email, String pass){
+    public void login(String email, String pass) {
         typeInEmailInput(email);
         typeInPasswordInput(pass);
         clickOnLoginButton();
@@ -44,5 +47,9 @@ public class LoginFormComponent extends AbstractUIObject {
 
     public boolean isErrorMessageVisible() {
         return emailOrPasswordIncorrectMessage.isVisible();
+    }
+
+    public boolean isLoginToYourAccountMessageVisible() {
+        return loginToYourAccountMessage.isVisible();
     }
 }
