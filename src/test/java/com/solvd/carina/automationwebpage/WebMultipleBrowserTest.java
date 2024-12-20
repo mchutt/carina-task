@@ -8,20 +8,39 @@ import com.solvd.carina.automationwebpage.pages.*;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static com.solvd.carina.automationwebpage.constants.UserConstants.*;
 
-public class AutomationTest extends AbstractTest {
+public class WebMultipleBrowserTest extends AbstractTest {
 
+    @BeforeMethod
+    @Parameters({"browser"})
+    public void setUpDriver(String browser) {
+        switch (browser) {
+            case "chrome":
+                getDriver(browser, new ChromeOptions());
+                break;
+            case "firefox":
+                getDriver(browser, new FirefoxOptions());
+                break;
+            default:
+                throw new IllegalArgumentException("Unable to create a driver for this driver: " + browser);
+        }
+    }
 
     @Test
+    @Parameters({"browser"})
     @MethodOwner(owner = "mchutt")
-    public void searchAProductTest() {
-        HomePage homePage = new HomePage(getDriver());
+    public void searchAProductTest(String browser) {
+        HomePage homePage = new HomePage(getDriver(browser));
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
@@ -49,9 +68,10 @@ public class AutomationTest extends AbstractTest {
     }
 
     @Test
+    @Parameters({"browser"})
     @MethodOwner(owner = "mchutt")
-    public void registerUserWithAnExistingEmailTest() {
-        HomePage homePage = new HomePage(getDriver());
+    public void registerUserWithAnExistingEmailTest(String browser) {
+        HomePage homePage = new HomePage(getDriver(browser));
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
@@ -66,9 +86,10 @@ public class AutomationTest extends AbstractTest {
     }
 
     @Test
+    @Parameters({"browser"})
     @MethodOwner(owner = "mchutt")
-    public void loginWithAnIncorrectEmailAndPasswordTest() {
-        HomePage homePage = new HomePage(getDriver());
+    public void loginWithAnIncorrectEmailAndPasswordTest(String browser) {
+        HomePage homePage = new HomePage(getDriver(browser));
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
@@ -83,9 +104,10 @@ public class AutomationTest extends AbstractTest {
     }
 
     @Test
+    @Parameters({"browser"})
     @MethodOwner(owner = "mchutt")
-    public void addProductToTheCartTest() {
-        HomePage homePage = new HomePage(getDriver());
+    public void addProductToTheCartTest(String browser) {
+        HomePage homePage = new HomePage(getDriver(browser));
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
@@ -105,9 +127,10 @@ public class AutomationTest extends AbstractTest {
     }
 
     @Test
+    @Parameters({"browser"})
     @MethodOwner(owner = "mchutt")
-    public void checkoutTest() {
-        HomePage homePage = new HomePage(getDriver());
+    public void checkoutTest(String browser) {
+        HomePage homePage = new HomePage(getDriver(browser));
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
@@ -143,9 +166,10 @@ public class AutomationTest extends AbstractTest {
     }
 
     @Test
+    @Parameters({"browser"})
     @MethodOwner(owner = "mchutt")
-    public void createAccountAndRemoveAccountTest() {
-        HomePage homePage = new HomePage(getDriver());
+    public void createAccountAndRemoveAccountTest(String browser) {
+        HomePage homePage = new HomePage(getDriver(browser));
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
