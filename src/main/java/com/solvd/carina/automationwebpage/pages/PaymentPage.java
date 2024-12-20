@@ -29,24 +29,29 @@ public class PaymentPage extends AbstractPage {
         super(driver);
     }
 
-    public void typeInNameOnCardInput(String text) {
+    public PaymentPage typeInNameOnCardInput(String text) {
         nameOnCardInput.type(text);
+        return this;
     }
 
-    public void typeInCardNumberInput(String text) {
+    public PaymentPage typeInCardNumberInput(String text) {
         cardNumberInput.type(text);
+        return this;
     }
 
-    public void typeInCVCInput(String text) {
+    public PaymentPage typeInCVCInput(String text) {
         cvcInput.type(text);
+        return this;
     }
 
-    public void typeInExpirationMonthInput(String text) {
+    public PaymentPage typeInExpirationMonthInput(String text) {
         expirationMonthInput.type(text);
+        return this;
     }
 
-    public void typeInExpirationYearInput(String text) {
+    public PaymentPage typeInExpirationYearInput(String text) {
         expirationYearInput.type(text);
+        return this;
     }
 
     public PaymentDonePage clickOnConfirmOrderButton() {

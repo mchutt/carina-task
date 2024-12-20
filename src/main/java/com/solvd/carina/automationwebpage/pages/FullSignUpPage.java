@@ -42,44 +42,53 @@ public class FullSignUpPage extends AbstractPage {
         super(driver);
     }
 
-    public void typePassword(String pass) {
+    public FullSignUpPage typePassword(String pass) {
         passwordInput.type(pass);
+        return this;
     }
 
-    public void typeFirstName(String firstName) {
+    public FullSignUpPage typeFirstName(String firstName) {
         firstNameInput.type(firstName);
+        return this;
     }
 
-    public void typeLastName(String lastName) {
+    public FullSignUpPage typeLastName(String lastName) {
         lastNameInput.type(lastName);
+        return this;
     }
 
-    public void typeAddress(String address) {
+    public FullSignUpPage typeAddress(String address) {
         addressOneInput.type(address);
+        return this;
     }
 
-    public void selectCountry(String country) {
+    public FullSignUpPage selectCountry(String country) {
         countrySelect.scrollTo();
         countrySelect.select(country);
+        return this;
     }
 
-    public void typeState(String state) {
+    public FullSignUpPage typeState(String state) {
         stateInput.type(state);
+        return this;
     }
 
-    public void typeCity(String city) {
+    public FullSignUpPage typeCity(String city) {
         cityInput.type(city);
+        return this;
     }
 
-    public void typeZipCode(String zipCode) {
+    public FullSignUpPage typeZipCode(String zipCode) {
         zipcodeInput.type(zipCode);
+        return this;
     }
 
-    public void typeMobilePhone(String mobileNumber) {
+    public FullSignUpPage typeMobilePhone(String mobileNumber) {
         mobileNumberInput.type(mobileNumber);
+        return this;
     }
 
-    public AccountCreatedPage clickOnSubmitButton(){
+    public AccountCreatedPage clickOnSubmitButton() {
         submitButton.click();
         return new AccountCreatedPage(driver);
     }

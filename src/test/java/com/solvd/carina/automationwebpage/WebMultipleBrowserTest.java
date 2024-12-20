@@ -151,14 +151,14 @@ public class WebMultipleBrowserTest extends AbstractTest {
         Assert.assertFalse(cartPage.getAllProducts().isEmpty(), "The cart is empty after adding a product. ");
 
         CheckoutPage checkoutPage = cartPage.clickOnCheckoutButton();
-        PaymentPage paymentPage = checkoutPage.clickOnPlaceOrderButton();
 
-        paymentPage.typeInNameOnCardInput("Mateo");
-        paymentPage.typeInCardNumberInput("123424234");
-        paymentPage.typeInCVCInput("234");
-        paymentPage.typeInExpirationMonthInput("03");
-        paymentPage.typeInExpirationYearInput("2030");
-        PaymentDonePage paymentDonePage = paymentPage.clickOnConfirmOrderButton();
+        PaymentDonePage paymentDonePage = checkoutPage.clickOnPlaceOrderButton()
+                .typeInNameOnCardInput("Mateo")
+                .typeInCardNumberInput("123424234")
+                .typeInCVCInput("234")
+                .typeInExpirationMonthInput("03")
+                .typeInExpirationYearInput("2030")
+                .clickOnConfirmOrderButton();
 
         boolean confirmedOrder = paymentDonePage.isConfirmedOrderMessageDisplayed();
         Assert.assertTrue(confirmedOrder, "The order confirmation message is not displayed. ");
@@ -176,17 +176,17 @@ public class WebMultipleBrowserTest extends AbstractTest {
         SignUpFormComponent form = homePage.getHeader().openLoginPage().getSignUpForm();
         form.signUp(NEW_USER_NAME, NEW_USER_EMAIL);
 
-        FullSignUpPage fullSignUpPage = form.openFullSignUpPage();
-        fullSignUpPage.typeFirstName(NEW_USER_NAME);
-        fullSignUpPage.typeLastName(NEW_USER_LAST_NAME);
-        fullSignUpPage.typePassword(NEW_USER_PASS);
-        fullSignUpPage.typeAddress(NEW_USER_ADDRESS);
-        fullSignUpPage.selectCountry(NEW_USER_COUNTRY);
-        fullSignUpPage.typeState(NEW_USER_STATE);
-        fullSignUpPage.typeCity(NEW_USER_CITY);
-        fullSignUpPage.typeZipCode(NEW_USER_ZIP_CODE);
-        fullSignUpPage.typeMobilePhone(NEW_USER_MOBILE_NUMBER);
-        AccountCreatedPage accountCreatedPage = fullSignUpPage.clickOnSubmitButton();
+        AccountCreatedPage accountCreatedPage = form.openFullSignUpPage()
+                .typeFirstName(NEW_USER_NAME)
+                .typeLastName(NEW_USER_LAST_NAME)
+                .typePassword(NEW_USER_PASS)
+                .typeAddress(NEW_USER_ADDRESS)
+                .selectCountry(NEW_USER_COUNTRY)
+                .typeState(NEW_USER_STATE)
+                .typeCity(NEW_USER_CITY)
+                .typeZipCode(NEW_USER_ZIP_CODE)
+                .typeMobilePhone(NEW_USER_MOBILE_NUMBER)
+                .clickOnSubmitButton();
 
         Assert.assertTrue(accountCreatedPage.isAccountCreatedMessageVisible(), "The message 'Account Created!' is not visible!");
         accountCreatedPage.clickOnContinueButton();
