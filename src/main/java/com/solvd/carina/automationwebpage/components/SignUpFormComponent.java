@@ -1,15 +1,11 @@
 package com.solvd.carina.automationwebpage.components;
 
+import com.solvd.carina.automationwebpage.pages.FullSignUpPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class SignUpFormComponent extends AbstractUIObject {
 
@@ -27,6 +23,16 @@ public class SignUpFormComponent extends AbstractUIObject {
 
     public SignUpFormComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
+    }
+
+    public void signUp(String name, String email){
+        typeInNameInput(name);
+        typeInEmailInput(email);
+        clickOnSignUpButton();
+    }
+
+    public FullSignUpPage openFullSignUpPage(){
+        return new FullSignUpPage(driver);
     }
 
     public void typeInNameInput(String name) {

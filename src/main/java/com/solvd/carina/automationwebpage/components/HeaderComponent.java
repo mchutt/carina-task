@@ -2,6 +2,7 @@ package com.solvd.carina.automationwebpage.components;
 
 
 import com.solvd.carina.automationwebpage.constants.LinkNames;
+import com.solvd.carina.automationwebpage.pages.AccountDeletedPage;
 import com.solvd.carina.automationwebpage.pages.HomePage;
 import com.solvd.carina.automationwebpage.pages.LoginPage;
 import com.solvd.carina.automationwebpage.pages.ProductsPage;
@@ -49,7 +50,12 @@ public class HeaderComponent extends AbstractUIObject {
         return new LoginPage(driver);
     }
 
-    public boolean isLoggedMessageDisplayed() {
+    public AccountDeletedPage deleteAccount(){
+        clickOnLink(LinkNames.DELETE_ACCOUNT);
+        return new AccountDeletedPage(driver);
+    }
+
+    public boolean isLoggedMessagePresent() {
         return loggedMessage.isElementPresent();
     }
 

@@ -5,11 +5,6 @@ import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LoginFormComponent extends AbstractUIObject {
 
@@ -37,15 +32,17 @@ public class LoginFormComponent extends AbstractUIObject {
         passwordInput.type(pass);
     }
 
-
     public void clickOnLoginButton() {
         loginButton.click();
     }
 
-    public boolean isErrorMessageVisible() {
-        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.visibilityOf(emailOrPasswordIncorrectMessage.getElement()));
+    public void login(String email, String pass){
+        typeInEmailInput(email);
+        typeInPasswordInput(pass);
+        clickOnLoginButton();
+    }
 
+    public boolean isErrorMessageVisible() {
         return emailOrPasswordIncorrectMessage.isVisible();
     }
 }

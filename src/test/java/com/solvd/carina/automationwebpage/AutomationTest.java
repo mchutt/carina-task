@@ -5,16 +5,20 @@ import com.solvd.carina.automationwebpage.components.ProductCardComponent;
 import com.solvd.carina.automationwebpage.components.ProductInCartComponent;
 import com.solvd.carina.automationwebpage.components.SignUpFormComponent;
 import com.solvd.carina.automationwebpage.pages.*;
+import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static com.solvd.carina.automationwebpage.constants.UserConstants.*;
+
 public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
 
-    private static final String userPassword = "123456789";
-    private static final String userEmail = "mateo@mateo.com";
+
+
+
 
     @Test
     public void searchAProductTest() {
@@ -46,41 +50,35 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
     }
 
     @Test
-    public void registerUserWithAnExistingEmail() {
+    public void registerUserWithAnExistingEmailTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
 
-        LoginPage loginPage = homePage.getHeader().openLoginPage();
-        SignUpFormComponent form = loginPage.getSignUpForm();
-        form.typeInEmailInput("pepe@pepe.com");
-        form.typeInNameInput("Pepe");
-        form.clickOnSignUpButton();
+        SignUpFormComponent form = homePage.getHeader().openLoginPage().getSignUpForm();
+        form.signUp("Pepe", "pepe@pepe.com");
 
         boolean isErrorMessageVisible = form.isErrorMessageVisible();
         Assert.assertTrue(isErrorMessageVisible, "The error message for an existing email is not displayed. ");
     }
 
     @Test
-    public void loginWithAnIncorrectEmailAndPassword() {
+    public void loginWithAnIncorrectEmailAndPasswordTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
 
-        LoginPage loginPage = homePage.getHeader().openLoginPage();
-        LoginFormComponent loginForm = loginPage.getLoginForm();
-        loginForm.typeInEmailInput("pepe@pepe.com");
-        loginForm.typeInPasswordInput("Incorrect Pass");
-        loginForm.clickOnLoginButton();
+        LoginFormComponent loginForm = homePage.getHeader().openLoginPage().getLoginForm();
+        loginForm.login("pepe@pepe.com", "Incorrect Pass");
 
         boolean isErrorMessageVisible = loginForm.isErrorMessageVisible();
         Assert.assertTrue(isErrorMessageVisible, "The error message for incorrect login credentials is not displayed. ");
     }
 
     @Test
-    public void addProductToTheCart() {
+    public void addProductToTheCartTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
@@ -91,6 +89,8 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
         ProductDetailsPage productDetailsPage = productCardComponent.openProductDetails();
 
         CartPage cartPage = productDetailsPage.clickOnAddToCartButton().openCartPage();
+
+
         Assert.assertFalse(cartPage.getAllProducts().isEmpty(), "The cart is empty. ");
 
         cartPage.getAllProducts()
@@ -106,13 +106,10 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
 
 
         //Login
-        LoginPage loginPage = homePage.getHeader().openLoginPage();
-        LoginFormComponent loginForm = loginPage.getLoginForm();
-        loginForm.typeInEmailInput(userEmail);
-        loginForm.typeInPasswordInput(userPassword);
-        loginForm.clickOnLoginButton();
+        LoginFormComponent loginForm = homePage.getHeader().openLoginPage().getLoginForm();
+        loginForm.login(USER_EMAIL, USER_PASSWORD);
 
-        boolean isloggedMessageDisplayed = homePage.getHeader().isLoggedMessageDisplayed();
+        boolean isloggedMessageDisplayed = homePage.getHeader().isLoggedMessagePresent();
         Assert.assertTrue(isloggedMessageDisplayed, "The 'logged in user' message is not displayed after login. ");
 
         //Add product to cart
@@ -135,6 +132,40 @@ public class AutomationTest extends com.zebrunner.carina.core.AbstractTest {
 
         boolean confirmedOrder = paymentDonePage.isConfirmedOrderMessageDisplayed();
         Assert.assertTrue(confirmedOrder, "The order confirmation message is not displayed. ");
+
+    }
+
+    @Test
+    @MethodOwner(owner = "mchutt")
+    public void createAccountAndRemoveAccountTest(){
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
+
+        SignUpFormComponent form = homePage.getHeader().openLoginPage().getSignUpForm();
+        form.signUp(NEW_USER_NAME, NEW_USER_EMAIL);
+
+        FullSignUpPage fullSignUpPage = form.openFullSignUpPage();
+        fullSignUpPage.typeFirstName(NEW_USER_NAME);
+        fullSignUpPage.typeLastName(NEW_USER_LAST_NAME);
+        fullSignUpPage.typePassword(NEW_USER_PASS);
+        fullSignUpPage.typeAddress(NEW_USER_ADDRESS);
+        fullSignUpPage.selectCountry(NEW_USER_COUNTRY);
+        fullSignUpPage.typeState(NEW_USER_STATE);
+        fullSignUpPage.typeCity(NEW_USER_CITY);
+        fullSignUpPage.typeZipCode(NEW_USER_ZIP_CODE);
+        fullSignUpPage.typeMobilePhone(NEW_USER_MOBILE_NUMBER);
+
+        AccountCreatedPage accountCreatedPage = fullSignUpPage.clickOnSubmitButton();
+        Assert.assertTrue(accountCreatedPage.isAccountCreatedMessageVisible(), "The message 'Account Created!' is not visible!");
+        accountCreatedPage.clickOnContinueButton();
+
+        AccountDeletedPage accountDeletedPage = homePage.getHeader().deleteAccount();
+        Assert.assertTrue(accountDeletedPage.isAccountDeletedMessageVisible(), "The message 'Account Deleted!' is not visible");
+        accountDeletedPage.clickOnContinueButton();
+
+        boolean isLoggedMessagePresent = homePage.getHeader().isLoggedMessagePresent();
+        Assert.assertFalse(isLoggedMessagePresent, "The logged message should not be present");
 
     }
 }
