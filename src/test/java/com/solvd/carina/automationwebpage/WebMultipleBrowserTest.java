@@ -153,11 +153,11 @@ public class WebMultipleBrowserTest extends AbstractTest {
         CheckoutPage checkoutPage = cartPage.clickOnCheckoutButton();
 
         PaymentDonePage paymentDonePage = checkoutPage.clickOnPlaceOrderButton()
-                .typeInNameOnCardInput("Mateo")
-                .typeInCardNumberInput("123424234")
-                .typeInCVCInput("234")
-                .typeInExpirationMonthInput("03")
-                .typeInExpirationYearInput("2030")
+                .typeInNameOnCardInput(USER_CARD_NAME)
+                .typeInCardNumberInput(USER_CARD_NUMBER)
+                .typeInCVCInput(USER_CARD_CVC)
+                .typeInExpirationMonthInput(USER_CARD_MONTH)
+                .typeInExpirationYearInput(USER_CARD_YEAR)
                 .clickOnConfirmOrderButton();
 
         boolean confirmedOrder = paymentDonePage.isConfirmedOrderMessageDisplayed();

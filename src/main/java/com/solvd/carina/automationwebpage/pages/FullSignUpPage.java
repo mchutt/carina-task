@@ -48,6 +48,7 @@ public class FullSignUpPage extends AbstractPage {
     }
 
     public FullSignUpPage typeFirstName(String firstName) {
+        firstNameInput.isElementPresent();
         firstNameInput.type(firstName);
         return this;
     }
@@ -89,6 +90,7 @@ public class FullSignUpPage extends AbstractPage {
     }
 
     public AccountCreatedPage clickOnSubmitButton() {
+        submitButton.scrollTo();
         submitButton.click();
         return new AccountCreatedPage(driver);
     }

@@ -14,4 +14,11 @@ public interface UserConstants {
      String NEW_USER_CITY = "city";
      String NEW_USER_ZIP_CODE = "code";
      String NEW_USER_MOBILE_NUMBER = "12345678";
+
+
+     String USER_CARD_NAME = "Mateo";
+     String USER_CARD_NUMBER = "123456789";
+     String USER_CARD_CVC = "234";
+     String USER_CARD_MONTH = "03";
+     String USER_CARD_YEAR = "2030";
 }
